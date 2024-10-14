@@ -8,21 +8,21 @@
     "layer": [
       {
         "data": {
-          "url": "https://raw.githubusercontent.com/vega/vega-datasets/master/data/world-110m.json",
+          "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/refs/heads/main/datavis2/data/mapAustralia.json",
           "format": {
             "type": "topojson",
-            "feature": "countries"
+            "feature": "australia"
           }
         },
         "mark": {
           "type": "geoshape",
           "fill": "lightgray",
-          "stroke": "white"
+          "stroke": "black"
         }
       },
       {
         "data": {
-          "url": "../data/auslang_dataset.csv"  
+          "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/refs/heads/main/datavis2/data/austlang_dataset.csv"  
         },
         "mark": "circle",
         "encoding": {
