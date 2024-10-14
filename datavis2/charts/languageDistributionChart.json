@@ -1,0 +1,38 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 600,
+    "height": 400,
+    "projection": {
+      "type": "mercator"
+    },
+    "layer": [
+      {
+        "data": {
+          "url": "https://raw.githubusercontent.com/vega/vega-datasets/master/data/world-110m.json",
+          "format": {
+            "type": "topojson",
+            "feature": "countries"
+          }
+        },
+        "mark": {
+          "type": "geoshape",
+          "fill": "lightgray",
+          "stroke": "white"
+        }
+      },
+      {
+        "data": {
+          "url": "../data/auslang_dataset.csv"  
+        },
+        "mark": "circle",
+        "encoding": {
+          "longitude": {"field": "approximate_longitude_of_language_variety", "type": "quantitative"},
+          "latitude": {"field": "approximate_latitude_of_language_variety", "type": "quantitative"},
+          "tooltip": [{"field": "language_name", "type": "nominal"}],
+          "size": {"value": 50},
+          "color": {"value": "steelblue"}
+        }
+      }
+    ]
+  }
+  
