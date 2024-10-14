@@ -28,7 +28,7 @@
         "encoding": {
           "longitude": {"field": "approximate_longitude_of_language_variety", "type": "quantitative"},
           "latitude": {"field": "approximate_latitude_of_language_variety", "type": "quantitative"},
-          "tooltip": [{"field": "language_name", "type": "nominal"}],
+          "tooltip": [{"field": "language_name", "type": "nominal"}, {"field": "state_territory", "type": "nominal"}],
           "size": {"value": 50},
           "color": {"value": "steelblue"}
         }
