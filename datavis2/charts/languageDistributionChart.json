@@ -8,10 +8,10 @@
     "layer": [
       {
         "data": {
-          "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/refs/heads/main/datavis2/data/mapAustralia.json",
+          "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/refs/heads/main/datavis2/data/mapAustraliaStates.json",
           "format": {
             "type": "topojson",
-            "feature": "australia"
+            "feature": "austates"
           }
         },
         "mark": {
@@ -22,7 +22,7 @@
       },
       {
         "data": {
-          "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/refs/heads/main/datavis2/data/austlang_dataset.csv"  
+          "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/refs/heads/main/datavis2/data/austlang_dataset_cleaned.csv"  
         },
         "mark": "circle",
         "encoding": {
