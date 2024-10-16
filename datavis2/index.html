@@ -8,18 +8,92 @@
     <script src="https://cdn.jsdelivr.net/npm/vega@5.21.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.20.2"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        .chart1 {
+            margin-left: 20px;
+        }
+        .left-chart {
+            width: 50%;
+            height: 400px; /* Set a fixed height for the chart */
+        }
+        .right-section {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            margin-left: 200px; /* Move the right section further to the right */
+            gap: 150px;
+
+        }
+        .text {
+            margin-bottom: 20px; /* Adds space between text and the charts */
+            height: 40px;
+            margin-left: 5px;
+        }
+        .right-charts {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .footer {
+            bottom: -200000;
+            width: 100%;
+            text-align: center;
+            font-weight: 100;
+            font-size: small;
+            color: gray;
+            padding: 10px 0;
+        }
+        #chart1 {
+            width: 100%;
+            height: 100%;
+        }
+        #chart2, #chart3 {
+            width: 100%;
+            height: 200px; /* Set a fixed height for each right chart */
+        }
+    </style>
 </head>
 <body>
     <h1>Indigenous Languages across Australia</h1>
     
-    <div id="chart1"></div>
-    <div id="chart2"></div>
-    <div id="chart3"></div>
+    <div class="chart-container">
+        <div class="left-chart">
+            <div id="chart1" class="chart1"></div> <!-- Placeholder for Working Chart -->
+        </div>
+        <div class="right-section">
+            <p class="text"> 
+                This visualisation aims to highlight the wide variety and significant distribution of Australian Indigenous languages across the country.<br><br> 
+                Australian Indigenous languages are a critical aspect of the nation's cultural heritage, with hundreds of languages spoken by communities spread across diverse regions.<br><br> 
+                We aim to shed light on both the diversity and the challenges of preserving these languages in the modern era.
+            </p>
+            <div id="chart2" class="right-charts"></div> <!-- Placeholder for Indigenous Vs Other Pie Chart -->
+            <div id="chart3" class="right-charts"></div> <!-- Placeholder for Number of Speakers Line Chart -->
+        </div>
+    </div>
+
+    <div style="height: 80px;"></div> 
+    <div class="footer">
+        <p>Created by Jeffrey Yan</p>
+        <p>Sources: Collated census data from <a href="https://profile.id.com.au/australia/language?BMID=50" target="_blank">.idcommunity</a></p>
+        <p>Auslang dataset from the <a href="https://collection.aiatsis.gov.au/datasets/austlang/001" target="_blank">Australian Institute of Aboriginal and Torres Strait Islander Studies (AIATSIS)</a></p>
+    </div>
 
     <script>
-        vegaEmbed('#chart1', 'charts\\working.json'); 
-        vegaEmbed('#chart2', 'charts\\indigenousVsOtherChart.json');
-        vegaEmbed('#chart3', 'charts\\numberOfSpeakersChart.json'); 
+        // Embed charts using Vega-Embed
+        vegaEmbed('#chart1', 'charts/working.json');
+        vegaEmbed('#chart2', 'charts/indigenousVsOtherChart.json');
+        vegaEmbed('#chart3', 'charts/numberOfSpeakersChart.json');
     </script>
 </body>
 </html>

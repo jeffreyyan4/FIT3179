@@ -116,7 +116,7 @@
           ]
         },
         {
-          "calculate": "'Year: ' + yearSelect + '\\nAustralian Indigenous Speakers: ' + datum.TotalSpeakers",
+          "calculate": "'Number of Australian Indigenous Speakers in ' + yearSelect + ': ' + datum.TotalSpeakers",
           "as": "annotation_text"
         }
       ],
@@ -125,7 +125,6 @@
         "align": "center",
         "baseline": "middle",
         "fontSize": 14,
-        "fontWeight": "bold",
         "fill": "black"
       },
       "encoding": {

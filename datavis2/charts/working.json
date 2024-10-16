@@ -48,11 +48,11 @@
     {
       "hconcat": [
         {
-          "width": 650,
+          "width": 500,
           "height": 650,
           "projection": {
             "type": "mercator",
-            "scale": 850,
+            "scale": 650,
             "center": [112, -7]
           },
           "layer": [
@@ -149,7 +149,12 @@
               }
             }
           ],
-          "title": "Map of Indigenous Languages by Location"
+          "title": {
+            "text": "Map of Indigenous Languages by Location",
+            "fontSize": 16,
+            "anchor": "middle",
+            "fontWeight": "bold"
+          }
         },
         {
           "vconcat": [
@@ -239,7 +244,12 @@
                   }
                 ]
               },
-              "title": "Unique Languages by State/Territory"
+              "title": {
+                "text": "Unique Languages by State/Territory",
+                "fontSize": 16,
+                "anchor": "middle",
+                "fontWeight": "bold"
+              }
             },
             {
               "width": 500,
@@ -304,7 +314,12 @@
                   "value": "#03ddff"
                 }
               },
-              "title": "Shared Languages by State/Territory"
+              "title": {
+                "text": "Shared Languages by State/Territory",
+                "fontSize": 16,
+                "anchor": "middle",
+                "fontWeight": "bold"
+              }
             }
           ]
         }
@@ -313,7 +328,7 @@
     {
       "hconcat": [
         {
-          "width": 1200,
+          "width": 1070,
           "height": 50,
           "data": {
             "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_with_location_type.csv",
