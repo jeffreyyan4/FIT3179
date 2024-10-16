@@ -1,0 +1,375 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "params": [
+      {
+        "name": "stateParam",
+        "value": null,
+        "bind": {
+          "name": "State/Territory: ",
+          "input": "select",
+          "options": [
+            null,
+            "ACT",
+            "NSW",
+            "NT",
+            "QLD",
+            "SA",
+            "TAS",
+            "VIC",
+            "WA",
+            "TSI"
+          ],
+          "labels": [
+            "All",
+            "ACT",
+            "NSW",
+            "NT",
+            "QLD",
+            "SA",
+            "TAS",
+            "VIC",
+            "WA",
+            "TSI"
+          ]
+        }
+      },
+      {
+        "name": "locationTypeVar",
+        "value": null,
+        "bind": {
+          "input": "select",
+          "options": [null, "Inland", "Coastline"],
+          "labels": ["All", "Inland", "Coastline"],
+          "name": "Location Type: "
+        }
+      }
+    ],
+    "vconcat": [
+      {
+        "hconcat": [
+          {
+            "width": 650,
+            "height": 650,
+            "projection": {
+              "type": "mercator",
+              "scale": 850,
+              "center": [112, -7]
+            },
+            "layer": [
+              {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/mapAustraliaStates.json",
+                  "format": {
+                    "type": "topojson",
+                    "feature": "austates"
+                  }
+                },
+                "mark": {
+                  "type": "geoshape",
+                  "fill": "lightgray",
+                  "stroke": "black"
+                }
+              },
+              {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_with_location_type.csv",
+                  "format": { "type": "csv" }
+                },
+                "transform": [
+                  {
+                    "filter": "stateParam == null || indexof(datum.state_territory, stateParam) >= 0"
+                  },
+                  {
+                    "filter": "locationTypeVar == null || datum.location_type === locationTypeVar"
+                  },
+                  {
+                    "calculate": "indexof(datum.state_territory, ',') == -1 ? datum.state_territory : 'Shared'",
+                    "as": "state_single_or_shared"
+                  }
+                ],
+                "mark": "circle",
+                "encoding": {
+                  "longitude": {
+                    "field": "approximate_longitude_of_language_variety",
+                    "type": "quantitative"
+                  },
+                  "latitude": {
+                    "field": "approximate_latitude_of_language_variety",
+                    "type": "quantitative"
+                  },
+                  "tooltip": [
+                    {
+                      "field": "state_territory",
+                      "type": "nominal",
+                      "title": "State/Territory"
+                    },
+                    {
+                      "field": "language_name",
+                      "type": "nominal",
+                      "title": "Language Name"
+                    },
+                    {
+                      "field": "location_type",
+                      "type": "nominal",
+                      "title": "Location Type"
+                    }
+                  ],
+                  "size": { "value": 50 },
+                  "color": {
+                    "field": "state_single_or_shared",
+                    "type": "nominal",
+                    "scale": {
+                      "domain": [
+                        "ACT",
+                        "NSW",
+                        "NT",
+                        "QLD",
+                        "SA",
+                        "TAS",
+                        "VIC",
+                        "WA",
+                        "TSI",
+                        "Shared"
+                      ],
+                      "range": [
+                        "#E41A1C",
+                        "#377EB8",
+                        "#4DAF4A",
+                        "#984EA3",
+                        "#FF7F00",
+                        "#FFFF33",
+                        "#A65628",
+                        "#F781BF",
+                        "#999999",
+                        "#03DDFF"
+                      ]
+                    },
+                    "legend": null
+                  }
+                }
+              }
+            ],
+            "title": "Map of Indigenous Languages by Location"
+          },
+          {
+            "vconcat": [
+              {
+                "width": 500,
+                "height": 250,
+                "data": {
+                  "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_with_location_type.csv",
+                  "format": { "type": "csv" }
+                },
+                "transform": [
+                  { "filter": "datum.category == 'Unique'" },
+                  { "filter": "stateParam == null || indexof(datum.state_territory, stateParam) >= 0" },
+                  { "filter": "locationTypeVar == null || datum.location_type === locationTypeVar" },
+                  {
+                    "calculate": "indexof(datum.state_territory, ',') == -1 ? datum.state_territory : 'Shared'",
+                    "as": "state_single_or_shared"
+                  }
+                ],
+                "mark": "bar",
+                "encoding": {
+                  "x": {
+                    "field": "state_single_or_shared",
+                    "type": "nominal",
+                    "sort": {
+                      "field": "language_name",
+                      "op": "count",
+                      "order": "descending"
+                    },
+                    "axis": {
+                      "title": "State/Territory",
+                      "labelAngle": -45
+                    }
+                  },
+                  "y": {
+                    "aggregate": "count",
+                    "field": "language_name",
+                    "type": "quantitative",
+                    "axis": { "title": "Number of Unique Languages" }
+                  },
+                  "color": {
+                    "field": "state_single_or_shared",
+                    "type": "nominal",
+                    "scale": {
+                      "domain": [
+                        "ACT",
+                        "NSW",
+                        "NT",
+                        "QLD",
+                        "SA",
+                        "TAS",
+                        "VIC",
+                        "WA",
+                        "TSI",
+                        "Shared"
+                      ],
+                      "range": [
+                        "#E41A1C",
+                        "#377EB8",
+                        "#4DAF4A",
+                        "#984EA3",
+                        "#FF7F00",
+                        "#FFFF33",
+                        "#A65628",
+                        "#F781BF",
+                        "#999999",
+                        "#FF00FF"
+                      ]
+                    },
+                    "legend": null
+                  },
+                  "tooltip": [
+                    {
+                      "field": "state_single_or_shared",
+                      "type": "nominal",
+                      "title": "State/Territory"
+                    },
+                    {
+                      "aggregate": "count",
+                      "field": "language_name",
+                      "type": "quantitative",
+                      "title": "Unique Languages"
+                    }
+                  ]
+                },
+                "title": "Unique Languages by State/Territory"
+              },
+              {
+                "width": 500,
+                "height": 250,
+                "data": {
+                  "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_with_location_type.csv",
+                  "format": { "type": "csv" }
+                },
+                "transform": [
+                  { "filter": "datum.category == 'Shared'" },
+                  { "filter": "stateParam == null || indexof(datum.state_territory, stateParam) >= 0" },
+                  { "filter": "locationTypeVar == null || datum.location_type === locationTypeVar" },
+                  {
+                    "calculate": "split(datum.state_territory, ', ')",
+                    "as": "states"
+                  },
+                  { "flatten": ["states"] },
+                  {
+                    "calculate": "datum.states",
+                    "as": "state"
+                  }
+                ],
+                "mark": "bar",
+                "encoding": {
+                  "x": {
+                    "field": "state",
+                    "type": "nominal",
+                    "sort": {
+                      "field": "language_name",
+                      "op": "count",
+                      "order": "descending"
+                    },
+                    "axis": {
+                      "title": "State/Territory",
+                      "labelAngle": -45
+                    }
+                  },
+                  "y": {
+                    "aggregate": "count",
+                    "field": "language_name",
+                    "type": "quantitative",
+                    "axis": { "title": "Number of Shared Languages" }
+                  },
+                  "tooltip": [
+                    {
+                      "field": "state",
+                      "type": "nominal",
+                      "title": "State/Territory"
+                    },
+                    {
+                      "aggregate": "count",
+                      "field": "language_name",
+                      "type": "quantitative",
+                      "title": "Shared Languages"
+                    }
+                  ],
+                  "color": {
+                    "value": "#03ddff"
+                  }
+                },
+                "title": "Shared Languages by State/Territory"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hconcat": [
+          {
+            "width": 1200,
+            "height": 50,
+            "data": {
+              "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_with_location_type.csv",
+              "format": { "type": "csv" }
+            },
+            "transform": [
+              { "filter": "stateParam == null || indexof(datum.state_territory, stateParam) >= 0" },
+              { "filter": "locationTypeVar == null || datum.location_type === locationTypeVar" },
+              {
+                "calculate": "indexof(datum.state_territory, ',') == -1 ? datum.state_territory : 'Shared'",
+                "as": "state_single_or_shared"
+              },
+              {
+                "aggregate": [
+                  {
+                    "op": "count",
+                    "as": "count"
+                  }
+                ],
+                "groupby": ["location_type"]
+              },
+              {
+                "calculate": "'Languages'",
+                "as": "dummy"
+              }
+            ],
+            "mark": {
+              "type": "bar"
+            },
+            "encoding": {
+              "y": {
+                "type": "nominal",
+                "axis": { "title": "" },
+                "field": "dummy",
+                "scale": { "padding": 0 }
+              },
+              "x": {
+                "field": "count",
+                "type": "quantitative",
+                "axis": { 
+                  "title": "Percentage of Languages",
+                  "format": ".0%",
+                  "labelExpr": "format(datum.value, '.0%')"
+                },
+                "stack": "normalize"
+              },
+              "color": {
+                "field": "location_type",
+                "type": "nominal",
+                "scale": {
+                  "domain": ["Inland", "Coastline"],
+                  "range": ["#1f77b4", "#ff7f0e"]
+                },
+                "legend": { "title": "Location Type" }
+              },
+              "tooltip": [
+                { "field": "location_type", "type": "nominal", "title": "Location Type" },
+                { "field": "count", "type": "quantitative", "title": "Number of Languages" }
+              ]
+            },
+            "title": "Distribution of Inland vs Coastal Languages"
+          }
+        ]
+      }
+    ]
+  }
+  

@@ -1,0 +1,33 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Distribution of people who speak Australian Indigenous Languages over time.",
+    "data": {
+      "values": [
+        {"year": 2001, "speakers": 50538},
+        {"year": 2006, "speakers": 55699},
+        {"year": 2011, "speakers": 61749},
+        {"year": 2016, "speakers": 64761},
+        {"year": 2021, "speakers": 78655}
+      ]
+    },
+    "layer": [
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {"field": "year", "type": "ordinal", "title": "Year"},
+          "y": {"field": "speakers", "type": "quantitative", "title": "Number of Speakers"},
+          "color": {"value": "#e45755"}
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {"field": "year", "type": "ordinal"},
+          "y": {"field": "speakers", "type": "quantitative"},
+          "color": {"value": "#000"},
+          "tooltip": [{"field": "year"}, {"field": "speakers"}]
+        }
+      }
+    ]
+  }
+  
