@@ -1,38 +1,63 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 600,
-    "height": 400,
-    "projection": {
-      "type": "mercator"
-    },
-    "layer": [
-      {
-        "data": {
-          "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/refs/heads/main/datavis2/data/mapAustraliaStates.json",
-          "format": {
-            "type": "topojson",
-            "feature": "austates"
-          }
-        },
-        "mark": {
-          "type": "geoshape",
-          "fill": "lightgray",
-          "stroke": "black"
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 400,
+  "projection": {
+    "type": "mercator"
+  },
+  "params": [
+    {
+      "name": "stateParam",
+      "value": null,
+      "bind": {
+        "input": "select",
+        "options": [null, "ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA", "TSI"],
+        "labels": ["All", "ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA", "TSI"]
+      }
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/mapAustraliaStates.json",
+        "format": {
+          "type": "topojson",
+          "feature": "austates"
         }
       },
-      {
-        "data": {
-          "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/refs/heads/main/datavis2/data/austlang_dataset_cleaned.csv"  
-        },
-        "mark": "circle",
-        "encoding": {
-          "longitude": {"field": "approximate_longitude_of_language_variety", "type": "quantitative"},
-          "latitude": {"field": "approximate_latitude_of_language_variety", "type": "quantitative"},
-          "tooltip": [{"field": "language_name", "type": "nominal"}, {"field": "state_territory", "type": "nominal"}],
-          "size": {"value": 50},
-          "color": {"value": "steelblue"}
-        }
+      "mark": {
+        "type": "geoshape",
+        "fill": "lightgray",
+        "stroke": "black"
       }
-    ]
-  }
-  
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_cleaned.csv",
+        "format": {"type": "csv"}
+      },
+      "transform": [
+        {
+          "filter": "stateParam == null || indexof(datum.state_territory, stateParam) >= 0"
+        }
+      ],
+      "mark": "circle",
+      "encoding": {
+        "longitude": {
+          "field": "approximate_longitude_of_language_variety",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "approximate_latitude_of_language_variety",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {"field": "language_name", "type": "nominal"},
+          {"field": "state_territory", "type": "nominal"}
+        ],
+        "size": {"value": 50},
+        "color": {"value": "steelblue"}
+      }
+    }
+  ]
+}
