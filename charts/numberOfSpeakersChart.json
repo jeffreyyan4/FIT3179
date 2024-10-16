@@ -7,7 +7,7 @@
     "fontWeight": "bold"
   },
   "data": {
-    "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/data/australia_language_census_data_cleaned.csv",
+    "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/refs/heads/main/data/australia_language_census_data_cleaned.csv",
     "format": {"type": "csv"}
   },
   "transform": [
