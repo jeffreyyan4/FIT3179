@@ -1,0 +1,107 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "something.",
+
+  "data": {
+    "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/australia_language_census_data_cleaned.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+
+  "transform": [
+    {
+      "filter": "datum['Language'] === 'Australian Indigenous Languages'"
+    },
+    {
+      "fold": ["2001", "2006", "2011", "2016", "2021"],
+      "as": ["Year", "Number of Speakers"]
+    },
+    {
+      "filter": "datum.Year !== '' && datum['Number of Speakers'] !== ''"
+    },
+    {
+      "calculate": "toNumber(datum['Number of Speakers'])",
+      "as": "Number of Speakers"
+    },
+    {
+      "calculate": "datetime(toNumber(datum.Year), 0, 1)",
+      "as": "Date"
+    }
+  ],
+
+  "mark": {
+    "type": "line",
+    "point": {
+      "filled": true,
+      "size": 100
+    }
+  },
+
+  "encoding": {
+    "x": {
+      "field": "Date",
+      "type": "temporal",
+      "title": "Year",
+      "timeUnit": "year",
+      "axis": {
+        "format": "%Y",
+        "tickCount": 5,
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "Number of Speakers",
+      "type": "quantitative",
+      "title": "Number of Speakers",
+      "axis": {
+        "format": ".2s",
+        "grid": true
+      }
+    },
+    "color": {
+      "value": "#1f77b4"
+    },
+    "tooltip": [
+      {
+        "field": "Year",
+        "type": "ordinal",
+        "title": "Year"
+      },
+      {
+        "field": "Number of Speakers",
+        "type": "quantitative",
+        "title": "Number of Speakers",
+        "format": ","
+      }
+    ]
+  },
+
+  "title": {
+    "text": "Growth in the Number of Australian Indigenous Language Speakers Over Time",
+    "subtitle": "Data Source: Australian Census",
+    "fontSize": 16,
+    "anchor": "start"
+  },
+
+  "config": {
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 14
+    },
+    "title": {
+      "fontSize": 16,
+      "fontWeight": "bold"
+    },
+    "view": {
+      "stroke": "transparent"
+    }
+  },
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "width": "container",
+  "height": 400
+}

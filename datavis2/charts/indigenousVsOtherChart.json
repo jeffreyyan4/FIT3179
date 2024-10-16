@@ -1,108 +1,147 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "description": "Interactive Pie Chart showing the number of speakers for each language in Australia, with a year filter.",
-    
-    "params": [
-      {
-        "name": "selected_year",
-        "bind": {
-          "input": "select",
-          "options": ["2001", "2006", "2011", "2016", "2021"],
-          "name": "Select Year: "
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Number of Speakers: Australian Indigenous Languages vs Other Languages by Year",
+    "fontSize": 16,
+    "anchor": "middle",
+    "fontWeight": "bold"
+  },
+  "width": 250,
+  "data": {
+    "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/australia_language_census_data_cleaned.csv",
+    "format": { "type": "csv" }
+  },
+  "params": [
+    {
+      "name": "yearSelect",
+      "value": "2021",
+      "bind": {
+        "input": "select",
+        "options": ["2021", "2016", "2011", "2006", "2001"],
+        "name": "Select Year: "
+      }
+    }
+  ],
+  "vconcat": [
+    {
+      "width": 300,
+      "height": 200,
+      "transform": [
+        {
+          "fold": ["2021", "2016", "2011", "2006", "2001"],
+          "as": ["Year", "Speakers"]
         },
-        "value": "2021"
-      }
-    ],
-    
-    "data": {
-      "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/australia_language_census_data_cleaned.csv",
-      "format": {
-        "type": "csv"
-      }
-    },
-    
-    "transform": [
-      {
-        "filter": "datum['Data label'] !== null && datum['Data label'] !== ''"
-      },
-      {
-        "fold": ["2001", "2006", "2011", "2016", "2021"],
-        "as": ["Year", "Number_of_Speakers"]
-      },
-      {
-        "filter": "datum.Year === selected_year"
-      },
-      {
-        "calculate": "toNumber(datum.Number_of_Speakers)",
-        "as": "Number_of_Speakers"
-      },
-      {
-        "window": [
-          {
-            "op": "rank",
-            "as": "rank"
-          }
-        ],
-        "sort": [
-          {
-            "field": "Number_of_Speakers",
-            "order": "descending"
-          }
-        ]
-      },
-      {
-        "calculate": "datum.rank <= 10 ? datum['Data label'] : 'Others'",
-        "as": "Language_Group"
-      },
-      {
-        "aggregate": [
-          {
-            "op": "sum",
-            "field": "Number_of_Speakers",
-            "as": "Total_Speakers"
-          }
-        ],
-        "groupby": ["Language_Group"]
-      },
-      {
-        "sort": [
-          {
-            "field": "Total_Speakers",
-            "order": "descending"
-          }
-        ]
-      }
-    ],
-    
-    "mark": {
-      "type": "arc",
-      "innerRadius": 50
-    },
-    
-    "encoding": {
-      "theta": {
-        "field": "Total_Speakers",
-        "type": "quantitative",
-        "title": "Number of Speakers"
-      },
-      "color": {
-        "field": "Language_Group",
-        "type": "nominal",
-        "title": "Language",
-        "scale": {
-          "scheme": "category20c"
+        {
+          "filter": "datum.Speakers > 0"
+        },
+        {
+          "filter": "datum.Year === yearSelect"
+        },
+        {
+          "filter": "datum.Language !== 'English'"
+        },
+        {
+          "calculate": "datum.Language === 'Australian Indigenous Languages' ? 'Australian Indigenous Languages' : 'Other Languages (except English)'",
+          "as": "LanguageGroup"
+        },
+        {
+          "aggregate": [
+            {
+              "op": "sum",
+              "field": "Speakers",
+              "as": "TotalSpeakers"
+            }
+          ],
+          "groupby": ["LanguageGroup"]
         }
-      },
-      "tooltip": [
-        {"field": "Language_Group", "type": "nominal", "title": "Language"},
-        {"field": "Total_Speakers", "type": "quantitative", "title": "Number of Speakers"}
-      ]
+      ],
+      "mark": "arc",
+      "encoding": {
+        "theta": {
+          "field": "TotalSpeakers",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "LanguageGroup",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Australian Indigenous Languages",
+              "Other Languages (except English)"
+            ],
+            "range": ["#1f77b4", "#ff7f0e"]
+          },
+          "legend": {
+            "title": "Language Group"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "LanguageGroup",
+            "type": "nominal",
+            "title": "Language Group"
+          },
+          {
+            "field": "TotalSpeakers",
+            "type": "quantitative",
+            "title": "Number of Speakers"
+          }
+        ]
+      }
     },
-    
+    {
+      "width": 400,
+      "height": 50,
+      "transform": [
+        {
+          "fold": ["2021", "2016", "2011", "2006", "2001"],
+          "as": ["Year", "Speakers"]
+        },
+        {
+          "filter": "datum.Speakers > 0"
+        },
+        {
+          "filter": "datum.Year === yearSelect"
+        },
+        {
+          "filter": "datum.Language === 'Australian Indigenous Languages'"
+        },
+        {
+          "aggregate": [
+            {
+              "op": "sum",
+              "field": "Speakers",
+              "as": "TotalSpeakers"
+            }
+          ]
+        },
+        {
+          "calculate": "'Year: ' + yearSelect + '\\nAustralian Indigenous Speakers: ' + datum.TotalSpeakers",
+          "as": "annotation_text"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "middle",
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "fill": "black"
+      },
+      "encoding": {
+        "text": {
+          "field": "annotation_text",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "view": { "stroke": null },
+  "config": {
     "title": {
-      "text": "Languages Spoken in Australia in Selected Year (Top 10 and Others)",
       "fontSize": 16,
-      "anchor": "start"
+      "anchor": "middle",
+      "fontWeight": "bold"
     }
   }
-  
+}

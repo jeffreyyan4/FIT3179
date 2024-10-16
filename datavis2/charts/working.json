@@ -340,6 +340,19 @@
               "groupby": ["location_type"]
             },
             {
+              "joinaggregate": [
+                {
+                  "op": "sum",
+                  "field": "count",
+                  "as": "total_count"
+                }
+              ]
+            },
+            {
+              "calculate": "datum.count / datum.total_count",
+              "as": "percentage"
+            },
+            {
               "calculate": "'Languages'",
               "as": "dummy"
             }
@@ -383,6 +396,12 @@
                 "field": "count",
                 "type": "quantitative",
                 "title": "Number of Languages"
+              },
+              {
+                "field": "percentage",
+                "type": "quantitative",
+                "title": "Percentage of Languages",
+                "format": ".0%"
               }
             ]
           },
