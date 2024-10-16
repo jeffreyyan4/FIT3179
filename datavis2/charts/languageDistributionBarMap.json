@@ -60,7 +60,7 @@
         },
         {
           "data": {
-            "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_cleaned.csv",
+            "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_with_location_type.csv",
             "format": { "type": "csv" }
           },
           "transform": [
@@ -137,7 +137,7 @@
           "width": 500,
           "height": 250,
           "data": {
-            "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_cleaned.csv",
+            "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_with_location_type.csv",
             "format": { "type": "csv" }
           },
           "transform": [
@@ -222,7 +222,7 @@
           "width": 500,
           "height": 250,
           "data": {
-            "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_cleaned.csv",
+            "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_with_location_type.csv",
             "format": { "type": "csv" }
           },
           "mark": "bar",
