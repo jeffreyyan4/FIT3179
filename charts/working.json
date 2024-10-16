@@ -58,7 +58,7 @@
           "layer": [
             {
               "data": {
-                "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/mapAustraliaStates.json",
+                "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/data/mapAustraliaStates.json",
                 "format": {
                   "type": "topojson",
                   "feature": "austates"
@@ -72,7 +72,7 @@
             },
             {
               "data": {
-                "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_with_location_type.csv",
+                "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/data/austlang_dataset_with_location_type.csv",
                 "format": { "type": "csv" }
               },
               "transform": [
@@ -162,7 +162,7 @@
               "width": 500,
               "height": 250,
               "data": {
-                "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_with_location_type.csv",
+                "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/data/austlang_dataset_with_location_type.csv",
                 "format": { "type": "csv" }
               },
               "transform": [
@@ -255,7 +255,7 @@
               "width": 500,
               "height": 250,
               "data": {
-                "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_with_location_type.csv",
+                "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/data/austlang_dataset_with_location_type.csv",
                 "format": { "type": "csv" }
               },
               "transform": [
@@ -331,7 +331,7 @@
           "width": 1070,
           "height": 50,
           "data": {
-            "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/austlang_dataset_with_location_type.csv",
+            "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/data/austlang_dataset_with_location_type.csv",
             "format": { "type": "csv" }
           },
           "transform": [
