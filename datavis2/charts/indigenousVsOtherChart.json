@@ -1,0 +1,108 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Interactive Pie Chart showing the number of speakers for each language in Australia, with a year filter.",
+    
+    "params": [
+      {
+        "name": "selected_year",
+        "bind": {
+          "input": "select",
+          "options": ["2001", "2006", "2011", "2016", "2021"],
+          "name": "Select Year: "
+        },
+        "value": "2021"
+      }
+    ],
+    
+    "data": {
+      "url": "https://raw.githubusercontent.com/jeffreyyan4/FIT3179/main/datavis2/data/australia_language_census_data_cleaned.csv",
+      "format": {
+        "type": "csv"
+      }
+    },
+    
+    "transform": [
+      {
+        "filter": "datum['Data label'] !== null && datum['Data label'] !== ''"
+      },
+      {
+        "fold": ["2001", "2006", "2011", "2016", "2021"],
+        "as": ["Year", "Number_of_Speakers"]
+      },
+      {
+        "filter": "datum.Year === selected_year"
+      },
+      {
+        "calculate": "toNumber(datum.Number_of_Speakers)",
+        "as": "Number_of_Speakers"
+      },
+      {
+        "window": [
+          {
+            "op": "rank",
+            "as": "rank"
+          }
+        ],
+        "sort": [
+          {
+            "field": "Number_of_Speakers",
+            "order": "descending"
+          }
+        ]
+      },
+      {
+        "calculate": "datum.rank <= 10 ? datum['Data label'] : 'Others'",
+        "as": "Language_Group"
+      },
+      {
+        "aggregate": [
+          {
+            "op": "sum",
+            "field": "Number_of_Speakers",
+            "as": "Total_Speakers"
+          }
+        ],
+        "groupby": ["Language_Group"]
+      },
+      {
+        "sort": [
+          {
+            "field": "Total_Speakers",
+            "order": "descending"
+          }
+        ]
+      }
+    ],
+    
+    "mark": {
+      "type": "arc",
+      "innerRadius": 50
+    },
+    
+    "encoding": {
+      "theta": {
+        "field": "Total_Speakers",
+        "type": "quantitative",
+        "title": "Number of Speakers"
+      },
+      "color": {
+        "field": "Language_Group",
+        "type": "nominal",
+        "title": "Language",
+        "scale": {
+          "scheme": "category20c"
+        }
+      },
+      "tooltip": [
+        {"field": "Language_Group", "type": "nominal", "title": "Language"},
+        {"field": "Total_Speakers", "type": "quantitative", "title": "Number of Speakers"}
+      ]
+    },
+    
+    "title": {
+      "text": "Languages Spoken in Australia in Selected Year (Top 10 and Others)",
+      "fontSize": 16,
+      "anchor": "start"
+    }
+  }
+  
